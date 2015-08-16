@@ -1,0 +1,18 @@
+#
+# Temperature Monitoring - https://github.com/blueskyfish/temperature-monitoring.git
+#
+# The MIT License (MIT)
+# Copyright (c) 2015 BlueSkyFish
+#
+
+node_modules/
+npm-debug.log
+
+# Distribution folder
+dist/
+
+#
+# Ignore the real config.php file, because the file contains sensitive data for each server
+#
+config.php
+*.config.php

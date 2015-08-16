@@ -1,0 +1,19 @@
+#
+# Temperature Monitoring - https://github.com/blueskyfish/temperature-monitoring.git
+#
+# The MIT License (MIT)
+# Copyright (c) 2015 BlueSkyFish
+#
+
+*/.idea/
+*.iml
+
+
+*/node_mudules/
+*/bower_components/
+*/npm-debug.log
+
+
+
+.DS_Store
+*~

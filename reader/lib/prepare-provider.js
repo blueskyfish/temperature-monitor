@@ -1,0 +1,36 @@
+/*
+ * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2015 BlueSkyFish
+ *
+ * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
+ */
+
+'use strict';
+
+var
+  _ = require('lodash'),
+  Q = require('q');
+
+var
+  PREFIX_LINE = '$1;1;;',
+  SUFFIX_LINE = ';0';
+
+function __extract(line) {
+  var
+    len = line.length;
+
+  return line.substring(PREFIX_LINE.length, len - SUFFIX_LINE.length).replace(/,/, '.');
+}
+
+var provider = module.exports = {
+  name: 'prepare-provider'
+};
+
+provider.extractLine = function (data) {
+  if (!data || !_.startsWith(data, PREFIX_LINE) || !_.endsWith(data, SUFFIX_LINE)) {
+    return Q.reject(new Error('receive invalidate data -> not processing'));
+  }
+  return __extract(data);
+};

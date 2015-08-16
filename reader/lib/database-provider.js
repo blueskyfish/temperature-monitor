@@ -31,13 +31,33 @@ function _openConnection(config) {
   return conn;
 }
 
+function _adjustSensorData(sensor) {
+  var
+    data = {};
+
+  _.forEach(sensor, function (value, name) {
+    switch (name) {
+      case 'nameId':
+        data['name_id'] = value;
+        break;
+      case 'groupId':
+        data['group_id'] = value;
+        break;
+      default:
+        data[name] = value;
+        break;
+    }
+  });
+  return data;
+}
+
 function _insertExecute(conn, sensor) {
   var
     defer = Q.defer();
 
   logger.trace('Insert Start...');
 
-  conn.query(SQL_INSERT, sensor, function (err, result) {
+  conn.query(SQL_INSERT, _adjustSensorData(sensor), function (err, result) {
 
     if (err) {
       logger.trace('Insert with error: ', err);

@@ -1,7 +1,7 @@
 {
   "name": "sensor-reader",
   "description": "reads the temperature dates from an ELV sensor-reader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "BlueSkyFish <blueskyfish@blueskyfish.de>",
   "keywords": [
     "node",

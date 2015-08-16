@@ -37,7 +37,7 @@ var
   };
 
 gulp.task('clean', function () {
-  del(['dist/*', 'dist/.*'], function (err, paths) {
+  del(['dist'], function (err, paths) {
   });
 });
 
@@ -85,10 +85,24 @@ gulp.task('copy-libraries', ['clean'], function () {
 
 });
 
+gulp.task('copy-slim', ['clean'], function () {
+
+  return gulp.src('app/Slim/**/**')
+    .pipe(gulp.dest('dist/Slim'));
+});
+
 /**
  * Build a distribution
  */
-gulp.task('build', ['check-target', 'config-file', 'copy-index', 'copy-htaccess', 'copy-libraries']);
+gulp.task('build', [
+  'clean',
+  'check-target',
+  'config-file',
+  'copy-index',
+  'copy-htaccess',
+  'copy-libraries',
+  'copy-slim'
+]);
 
 /**
  * Default Task (help)

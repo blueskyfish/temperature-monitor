@@ -29,7 +29,7 @@ Slim::registerAutoloader();
  */
 function getMode() {
     $version = '<%= version %>';
-    return strpos($version, 'version') === false ? 'production' : 'deployment';
+    return strpos($version, 'version') === false ? 'production' : 'development';
 }
 
 

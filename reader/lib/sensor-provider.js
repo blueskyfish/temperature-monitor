@@ -56,8 +56,8 @@ provider.getSensorList = function (config, line) {
       continue;
     }
     sensorData = {
-      name:          config.names[index] || 'Unknown',
-      group:         config.reader,
+      nameId:        index,
+      groupId:       config.groupId,
       temperature:  _parseAndConvertToInt(dataList[ index ]),
       humidity:     _parseAndConvertToInt(dataList[ index + SENSOR_COUNT ]),
       date:         date

@@ -11,7 +11,7 @@
 
 var
   http = require('http'),
-  url = request('url');
+  url = require('url');
 
 var
   _ = require('lodash'),

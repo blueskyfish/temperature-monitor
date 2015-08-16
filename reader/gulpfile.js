@@ -33,7 +33,12 @@ var
     ext: '.js'
   };
 
-gulp.task('check-target', function () {
+gulp.task('clean', function () {
+  del(['dist'], function (err, paths) {
+  });
+});
+
+gulp.task('check-target', ['clean'], function () {
   if (target === '') {
     console.log('');
     console.log('missing parameter "--target=name"');
@@ -43,11 +48,6 @@ gulp.task('check-target', function () {
   }
 });
 
-gulp.task('clean', function () {
-  del(['dist/**/*.*'], function (err, paths) {
-  });
-});
-
 gulp.task('config-file', ['clean'], function () {
 
   return gulp.src(configFile)
@@ -55,6 +55,11 @@ gulp.task('config-file', ['clean'], function () {
     .pipe(rename('config.js'))
     .pipe(gulp.dest('dist'));
 
+});
+
+gulp.task('copy-package', ['clean'], function () {
+  return gulp.src('package.json')
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copy-reader', ['clean'], function () {
@@ -76,7 +81,14 @@ gulp.task('copy-libraries', ['clean'], function () {
 /**
  * Build a distribution
  */
-gulp.task('build', ['check-target', 'config-file', 'copy-reader', 'copy-libraries']);
+gulp.task('build', [
+  'clean',
+  'check-target',
+  'config-file',
+  'copy-reader',
+  'copy-libraries',
+  'copy-package'
+]);
 
 /**
  * Default Task (help)

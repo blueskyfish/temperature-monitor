@@ -15,7 +15,7 @@
 #
 
 RewriteEngine On
-RewriteBase /temo2/
+RewriteBase /temo/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]

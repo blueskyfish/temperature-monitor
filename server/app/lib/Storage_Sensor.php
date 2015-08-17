@@ -33,21 +33,27 @@ class Storage_Sensor
         $pdo = openDatabase($this->app);
 
         $rules = $this->getSensorRules($pdo, $data['groupId'], $data['nameId']);
-
+        // set the current temperature and humidity
+        $this->updateSensor($pdo,
+          $data['groupId'], $data['nameId'], $data['temperature'], $data['humidity']
+        );
+        // extends the sensor data
         $data['rules'] = $rules;
 
+        // insert the new record
         $stmt = $pdo->prepare('INSERT INTO `sensors` SET
-  `group_id` = :groupId,
-  `name_id` = :nameId,
-  `rules` = :rules,
-  `temperature` = :temperature,
-  `humidity` = :humidity,
-  `date` = :date');
-
+          `group_id` = :groupId,
+          `name_id` = :nameId,
+          `rules` = :rules,
+          `temperature` = :temperature,
+          `humidity` = :humidity,
+          `date` = :date'
+        );
         $stmt->execute($data);
 
         # prepare the result: the inserted id
         $id = $pdo->lastInsertId();
+
         $result = array(
             'id' => $id,
         );
@@ -61,13 +67,29 @@ class Storage_Sensor
      * @return string
      */
     private function getSensorRules($pdo, $groupId, $nameId) {
-        $stmt = $pdo->prepare('SELECT `rules` FROM `sensor-names` WHERE `group_id` = :groupId AND `name_id` = :nameId');
+        $stmt = $pdo->prepare('SELECT `rules` FROM `sensor-names`
+          WHERE `group_id` = :groupId AND `name_id` = :nameId'
+        );
         $stmt->execute(array(
             'groupId' => $groupId,
             'nameId' => $nameId
         ));
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $result === false ? 'public' : $result['rules'];
+        return $result === false ? 'unknown' : $result['rules'];
+    }
+
+    private function updateSensor($pdo, $groupId, $nameId, $temperature, $humidity) {
+      $stmt = $pdo->prepare('UPDATE `sensor-names` SET
+        `temperature` = :temperature,
+        `humidity` = :humidity
+        WHERE `group_id` = :groupId AND `name_id` = :nameId'
+      );
+      $stmt->execute(array(
+        'groupId'     => $groupId,
+        'nameId'      => $nameId,
+        'temperature' => $temperature,
+        'humidity'    => $humidity
+      ));
     }
 
     private function prepareSensorData($sensor) {

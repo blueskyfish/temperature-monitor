@@ -77,15 +77,14 @@ env.name = 'env (Environment)';
 if (env.level) {
   env.level = logger.toLogLevel(env.level);
 }
-
-if (env.log && env.log.level) {
-  env.level = logger.toLogLevel(env.log.level);
+else {
+  env.level = logger.LEVEL_DEBUG;
 }
 
 //
 // set the log level to the logger
 //
-logger.setLevel(env.level || logger.LEVEL_DEBUG);
+logger.setLevel(env.level);
 
 //
 // Exports the env object

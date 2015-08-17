@@ -13,9 +13,8 @@
 module.exports = {
 
   // The logger section
-  log: {
-    level: 'debug' // (or 'all', 'warn', 'info', 'config', 'debug', 'trace', 'none')
-  },
+  // (values: 'all', 'warn', 'info', 'config', 'debug', 'trace', 'none')
+  level: 'debug',
 
   // The serial port section
   port: {

@@ -79,7 +79,7 @@ class Storage_Sensor
     }
 
     private function updateSensor($pdo, $groupId, $nameId, $temperature, $humidity) {
-      $stmt = $pdo->prepare('UPDATE `sensor-names` SET
+      $stmt = $pdo->prepare('UPDATE `sensor-currents` SET
         `temperature` = :temperature,
         `humidity` = :humidity
         WHERE `group_id` = :groupId AND `name_id` = :nameId'

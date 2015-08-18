@@ -86,7 +86,7 @@ function _sendData(config, sensor) {
     logger.warn('"', config.url, '" problem with request: ' + e.message);
 
     // resolve the unchanged sensor data.
-    defer.reject(sensor);
+    defer.resolve(sensor);
   });
 
   // write the post data

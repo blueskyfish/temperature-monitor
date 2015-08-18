@@ -33,8 +33,9 @@ var
     ext: '.js'
   };
 
-gulp.task('clean', function () {
+gulp.task('clean', function (done) {
   del(['dist'], function (err, paths) {
+    done();
   });
 });
 
@@ -49,12 +50,10 @@ gulp.task('check-target', ['clean'], function () {
 });
 
 gulp.task('config-file', ['clean'], function () {
-
   return gulp.src(configFile)
     .pipe(ejs(model, settings))
     .pipe(rename('config.js'))
     .pipe(gulp.dest('dist'));
-
 });
 
 gulp.task('copy-package', ['clean'], function () {
@@ -63,31 +62,30 @@ gulp.task('copy-package', ['clean'], function () {
 });
 
 gulp.task('copy-reader', ['clean'], function () {
-
   return gulp.src(['reader.js'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist'));
-
 });
 
 gulp.task('copy-libraries', ['clean'], function () {
-
   return gulp.src(['lib/*.js'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist/lib'));
-
 });
+
+gulp.task('copy-all', [
+  'config-file',
+  'copy-package',
+  'copy-reader',
+  'copy-libraries'
+]);
 
 /**
  * Build a distribution
  */
 gulp.task('build', [
-  'clean',
   'check-target',
-  'config-file',
-  'copy-reader',
-  'copy-libraries',
-  'copy-package'
+  'copy-all'
 ]);
 
 /**

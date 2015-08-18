@@ -26,7 +26,7 @@ ADD PRIMARY KEY (`group_id`,`name_id`) USING BTREE;
 --
 -- Insert the sensor
 --
-INSERT INTO `sensor-currents` (`group_id`, `name_id`) VALUES ('1000', '1');
+INSERT INTO `sensor-currents` (`group_id`, `name_id`) VALUES ('1000', '0');
 
 
 -- ----------------------------------------------------------------------------

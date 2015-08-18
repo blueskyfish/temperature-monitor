@@ -15,32 +15,20 @@ require('Slim/Slim.php');
 require('config/config.php');
 
 require('lib/Utils.php');
+
+require('lib/Application.php');
+require('lib/Exception_Middleware.php');
 require('lib/Storage_Sensor.php');
 
 use Slim\Slim;
 
-Slim::registerAutoloader();
-
-
-/**
- * Calculate the mode!
- *
- * @return string "production" or "deployment"
- */
-function getMode() {
-    $version = '<%= version %>';
-    return strpos($version, 'version') === false ? 'production' : 'development';
-}
-
 
 // ----------------------------------------------------------------------------
 
-/** @var \Slim\Slim $app */
-$app = config(new Slim(array(
-    'mode' => getMode()
-)));
+/** @var \sensor\Application $app */
+$app = config(new Application());
 
-//
+// Application Name
 $app->setName('sensor-server');
 
 
@@ -48,14 +36,13 @@ $app->setName('sensor-server');
 // Rest Actor: GET [root]/hello
 //
 $app->get('/hello', function () use ($app) {
-    $res = $app->response;
     $result = array(
-        'message' => 'Hello World',
-        'target' => '<%= target %>',
-        'version' => '<%= version %>'
+      'status' => 'okay',
+      'message' => 'Hello World',
+      'target' => '<%= target %>',
+      'version' => '<%= version %>'
     );
-    $res->headers->set('Content-Type', 'application/json');
-    echo json_encode($result);
+    $app->sendResult($result);
 });
 
 
@@ -63,15 +50,10 @@ $app->get('/hello', function () use ($app) {
 // Rest Actor: POST [root]/sensor/upload
 //
 $app->post('/sensor/upload', function () use ($app) {
-    $body = $app->request->getBody();
-    $sensor = json_decode($body, true);
+    $sensor = $app->getBodyJson();
 
     $storage = new Storage_Sensor($app);
-    $result = $storage->save($sensor);
-
-    $res = $app->response;
-    $res->headers->set('Content-Type', 'application/json');
-    $res->setBody(json_encode($result));
+    $storage->save($sensor);
 });
 
 //
@@ -79,18 +61,19 @@ $app->post('/sensor/upload', function () use ($app) {
 //
 $app->error(function (\Exception $e) use ($app) {
     $result = array(
+        'status'  => 'error',
         'message' => $e->getMessage(),
         'code' => $e->getCode(),
         'file' => $e->getFile(),
         'line' => $e->getLine(),
         'trace' => $e->getTraceAsString()
     );
-    $res = $app->response;
-    $res->setStatus(400);
-    $res->headers->set('Content-Type', 'application/json');
-    $res->setBody(json_encode($result));
+    $app->sendResult($result, 400);
 });
 
+//
+// Execution
+//
 $app->run();
 
 ?>

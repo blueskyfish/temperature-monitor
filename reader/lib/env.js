@@ -16,7 +16,7 @@
  *   help               shows the usage of the application
  *   level              set the log level
  * Configuration:
- *   log.level          set the log level
+ *   level              set the log level
  *   sensor.groupId     the sensor group id
  *   database.name      the database name
  *   database.host      the host of the database server

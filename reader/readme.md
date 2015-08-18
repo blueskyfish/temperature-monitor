@@ -26,7 +26,7 @@ The configuration for all parameters is in a js file. If the parameter `config` 
 
 property           | description
 -------------------|-----------------------------
-log.level          | set the log level
+level              | set the log level
 sensor.groupId     | the sensor group id
 database.name      | the database name
 database.host      | the host of the database server

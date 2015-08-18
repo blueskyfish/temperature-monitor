@@ -36,11 +36,12 @@ var
     ext: '.php'
   };
 
-gulp.task('clean', function () {
+
+gulp.task('clean', function (done) {
   del(['dist'], function (err, paths) {
+    done();
   });
 });
-
 
 gulp.task('check-target', ['clean'], function () {
   if (target === '') {
@@ -53,55 +54,49 @@ gulp.task('check-target', ['clean'], function () {
 });
 
 gulp.task('config-file', ['clean'], function () {
-
   return gulp.src(configFile)
     .pipe(ejs(model, settings))
     .pipe(rename('config.php'))
     .pipe(gulp.dest('dist/config'));
-
 });
 
 gulp.task('copy-htaccess', ['clean'], function () {
-
   return gulp.src(['app/.htaccess'])
     .pipe(ejs(model, { ext: ''}))
     .pipe(gulp.dest('dist'));
-
 });
 
 gulp.task('copy-index', ['clean'], function () {
-
   return gulp.src(['app/index.php'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist'));
-
 });
 
 gulp.task('copy-libraries', ['clean'], function () {
-
   return gulp.src(['app/lib/*.php'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist/lib'));
-
 });
 
 gulp.task('copy-slim', ['clean'], function () {
-
   return gulp.src('app/Slim/**/**')
     .pipe(gulp.dest('dist/Slim'));
 });
 
-/**
- * Build a distribution
- */
-gulp.task('build', [
-  'clean',
-  'check-target',
+gulp.task('copy-all', [
   'config-file',
   'copy-index',
   'copy-htaccess',
   'copy-libraries',
   'copy-slim'
+]);
+
+/**
+ * Build a distribution
+ */
+gulp.task('build', [
+  'check-target',
+  'copy-all'
 ]);
 
 /**

@@ -10,15 +10,18 @@
 
 namespace sensor;
 
+/**
+ * It stores the sensor data.
+ */
 class Storage_Sensor
 {
     /**
-     * @var \Slim\Slim
+     * @var \sensor\Application
      */
     private $app;
 
     /**
-     * @param \Slim\Slim $app
+     * @param \sensor\Application $app
      */
     public function __construct($app)
     {
@@ -32,19 +35,15 @@ class Storage_Sensor
         /** @var \PDO $pdo */
         $pdo = openDatabase($this->app);
 
-        $rules = $this->getSensorRules($pdo, $data['groupId'], $data['nameId']);
         // set the current temperature and humidity
         $this->updateSensor($pdo,
           $data['groupId'], $data['nameId'], $data['temperature'], $data['humidity']
         );
-        // extends the sensor data
-        $data['rules'] = $rules;
 
         // insert the new record
         $stmt = $pdo->prepare('INSERT INTO `sensors` SET
           `group_id` = :groupId,
           `name_id` = :nameId,
-          `rules` = :rules,
           `temperature` = :temperature,
           `humidity` = :humidity,
           `date` = :date'
@@ -55,27 +54,10 @@ class Storage_Sensor
         $id = $pdo->lastInsertId();
 
         $result = array(
-            'id' => $id,
+          'status' => 'okay',
+          'id'     => $id
         );
-        return $result;
-    }
-
-    /**
-     * @param \PDO $pdo
-     * @param int $groupId
-     * @param int $nameId
-     * @return string
-     */
-    private function getSensorRules($pdo, $groupId, $nameId) {
-        $stmt = $pdo->prepare('SELECT `rules` FROM `sensor-names`
-          WHERE `group_id` = :groupId AND `name_id` = :nameId'
-        );
-        $stmt->execute(array(
-            'groupId' => $groupId,
-            'nameId' => $nameId
-        ));
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $result === false ? 'unknown' : $result['rules'];
+        $this->app->sendResult($result);
     }
 
     private function updateSensor($pdo, $groupId, $nameId, $temperature, $humidity) {

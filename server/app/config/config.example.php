@@ -14,8 +14,8 @@ namespace sensor;
 /**
  * Setup the configuration for the application
  *
- * @param \Slim\Slim $app
- * @return \Slim\Slim
+ * @param \sensor\Application $app
+ * @return \sensor\Application
  */
 function config($app) {
 

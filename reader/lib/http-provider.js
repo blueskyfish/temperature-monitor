@@ -19,6 +19,7 @@ var
   Q = require('q');
 
 var
+  httpStatus = require('./http-status'),
   sensorStatus = require('./sensor-status');
 
 
@@ -44,7 +45,7 @@ function _sendData(config, sensor) {
 
       logger.debug('"', config.url, '" StatusCode=' + res.statusCode);
 
-      if (res.statusCode >= 400) {
+      if (httpStatus.getCode(res.statusCode) >= httpStatus.HTTP_BAD_REQUEST) {
         logger.warn('"', config.url, '" StatusCode=', res.statusCode, ' -> ', res.statusMessage);
         // resolve the unchanged sensor data.
         defer.resolve(sensor);
@@ -61,7 +62,7 @@ function _sendData(config, sensor) {
           var
             result = JSON.parse(data);
 
-          if (result && result.id) {
+          if (result && result.status === 'okay' && result.id) {
 
             // uploaded sensor data is stored in the server
             logger.debug('Uploaded sensor data: ', result.id);

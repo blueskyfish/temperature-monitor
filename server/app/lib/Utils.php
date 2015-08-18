@@ -11,6 +11,16 @@
 namespace sensor;
 
 /**
+ * Define the http status code "OK"
+ */
+define('HTTP_OKAY', 200);
+
+/**
+ * Define the http status code "Bad Request"
+ */
+define('HTTP_BAD_REQUEST', 400);
+
+/**
  * Open a database connection
  *
  * @param \Slim\Slim $app

@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
  *

@@ -1,4 +1,12 @@
-<?
+<?php
+/*
+ * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2015 BlueSkyFish
+ *
+ * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
+ */
 
 
 namespace sensor;

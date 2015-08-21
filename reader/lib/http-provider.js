@@ -22,12 +22,29 @@ var
   httpStatus = require('./http-status'),
   sensorStatus = require('./sensor-status');
 
+function _preparePostData(sensor) {
+  var
+    data = {};
+
+  _.forEach(sensor, function (value, name) {
+    switch (name) {
+      case 'sensor_id':
+      case 'sensorId':
+      case 'status':
+        break;
+      default:
+        data[name] = value;
+        break;
+    }
+  });
+  return JSON.stringify(data);
+}
 
 
 function _sendData(config, sensor) {
   var
     defer = Q.defer(),
-    postData = JSON.stringify(sensor),
+    postData = _preparePostData(sensor),
     httpServer = url.parse(config.url),
     options = {
       hostname: httpServer.hostname,
@@ -73,7 +90,7 @@ function _sendData(config, sensor) {
           defer.resolve(sensor);
         } catch (e) {
 
-          logger.warn('could not parse the response data into a JSON object. ', e);
+          logger.warn('Error: could not parse the response data into a JSON object. ', e);
           // resolve the unchanged sensor data.
           defer.resolve(sensor);
         }
@@ -83,7 +100,7 @@ function _sendData(config, sensor) {
 
   req.on('error', function(e) {
 
-    logger.warn('"', config.url, '" problem with request: ' + e.message);
+    logger.warn('Error: "', config.url, '" problem with request: ' + e.message);
 
     // resolve the unchanged sensor data.
     defer.resolve(sensor);

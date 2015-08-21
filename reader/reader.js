@@ -14,6 +14,7 @@
 
 var
   _ = require('lodash'),
+  later = require('later'),
   logger = require('bluesky-logger'),
   serialport = require('serialport'),
   Q = require('q');
@@ -23,10 +24,12 @@ var
   httpProvider = require('./lib/http-provider'),
   prepareProvider = require('./lib/prepare-provider'),
   sensorProvider = require('./lib/sensor-provider'),
-  databaseProvider = require('./lib/database-provider');
+  databaseProvider = require('./lib/database-provider'),
+  pkg = require('./package.json');
 
 var
-  reader; // serial port reader
+  reader,   // serial port reader
+  jobId;    // the later job (for cancel the job)
 
 /**
  * Callback function for receive data from the sensor reader.
@@ -37,7 +40,7 @@ var
  * @private
  */
 function _onReceiveData(data) {
-  logger.info('Receive Data: (size=', _.size(data), ')!');
+  logger.info('Begin: receive Data (size=', _.size(data), ')');
   Q.fcall(function () {
     return prepareProvider.extractLine(data);
   })
@@ -59,14 +62,44 @@ function _onReceiveData(data) {
     .done(
       function (insertIdList) {
         if (insertIdList) {
-          logger.info('Process the sensor dates: ', insertIdList);
+          logger.info('Finish receive data: ');
+          logger.debug(JSON.stringify(insertIdList));
         }
       },
       function (reason) {
-        logger.warn('Warning');
-        logger.warn(reason);
+        logger.info('Warning (Sensor)');
+        logger.info(reason);
       }
     );
+}
+
+function _onScheduleSensor() {
+  logger.info('Begin schedule of not uploaded sensor data');
+  Q.fcall(function () {
+    return databaseProvider.getSensorList(env.database);
+  })
+  .then(function (sensorList) {
+    return _traceStep('SensorList (status <> "UPDATED")', sensorList);
+  })
+  .then(function (sensorList) {
+    return httpProvider.sendSensorList(env.server, sensorList);
+  })
+  .then(function (sensorList) {
+    return _traceStep('Sensor List (after send)', sensorList);
+  })
+  .then(function (sensorList) {
+    return databaseProvider.updateSensorList(env.database, sensorList);
+  })
+  .done(
+    function (result) {
+      logger.info('Finish schedule');
+      logger.debug(JSON.stringify(result));
+    },
+    function (reason) {
+      logger.info('Warning (Schedule)');
+      logger.info(reason);
+    }
+  );
 }
 
 /**
@@ -87,16 +120,19 @@ function _traceStep(message, result) {
  * then it finish the reading
  * @private
  */
-function _shutdown() {
+function _shutdown(sigName) {
   if (reader) {
-    logger.info('\nFinish...');
+    logger.info(sigName, ': Finish...');
+    // stop the schedule job
+    jobId.clear();
     reader.close(function (err) {
       if (err) {
-        logger.warn('Shutdown with error: ', err);
+        logger.warn(sigName, ': Shutdown with error: ', err);
       }
       else {
-        logger.info('Shutdown');
+        logger.info(sigName, ': Shutdown');
       }
+      logger.info('\n\n');
       process.exit(0);
     });
   }
@@ -109,6 +145,26 @@ function _shutdown() {
  */
 function _main() {
 
+  var
+    sched;
+
+  switch (env.schedule.unit || 'minute') {
+    case 'hour':
+      sched = later.parse.recur().every(env.schedule.value).hour();
+      break;
+    default:
+    case 'minute':
+      sched = later.parse.recur().every(env.schedule.value).minute();
+      break;
+  }
+
+  logger.info(pkg.name, ' (', pkg.version, ')');
+  logger.config('Schedule: ', env.schedule.value, ' ', env.schedule.unit);
+
+  // starts the schedule job with later...
+  jobId = later.setInterval(_onScheduleSensor, sched);
+
+  // create serialport object
   reader = new serialport.SerialPort(env.port.name, {
     baudrate: env.port.baudrate,
     parser: serialport.parsers.readline(env.port.separator)
@@ -120,10 +176,14 @@ function _main() {
   });
 
   // listen for TERM signal .e.g. kill
-  process.on('SIGTERM', _shutdown);
+  process.on('SIGTERM', function () {
+    _shutdown('sigterm');
+  });
 
   // listen for INT signal e.g. Ctrl-C
-  process.on('SIGINT', _shutdown);
+  process.on('SIGINT', function () {
+    _shutdown('ctrl+c');
+  });
 }
 
 //

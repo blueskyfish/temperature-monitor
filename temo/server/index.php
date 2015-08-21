@@ -8,25 +8,31 @@
  * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
  */
 
-namespace sensor;
+namespace sensor\server;
+
+set_include_path('.:../shares');
 
 require('Slim/Slim.php');
 
 require('config/config.php');
 
-require('lib/Utils.php');
+require('lib/DB.php');
+require('lib/Define.php');
 
 require('lib/Application.php');
 require('lib/Exception_Middleware.php');
 require('lib/Storage_Sensor.php');
 
 use Slim\Slim;
+use sensor\shares\Application;
+use sensor\shares\Define;
+use sensor\config\Config;
 
 
 // ----------------------------------------------------------------------------
 
 /** @var \sensor\Application $app */
-$app = config(new Application());
+$app = Config::configure(new Application());
 
 // Application Name
 $app->setName('sensor-server');
@@ -37,7 +43,7 @@ $app->setName('sensor-server');
 //
 $app->get('/hello', function () use ($app) {
     $result = array(
-      'status' => 'okay',
+      'status' => Define::RESULT_OKAY,
       'message' => 'Hello World',
       'target' => '<%= target %>',
       'version' => '<%= version %>'
@@ -61,7 +67,7 @@ $app->post('/upload', function () use ($app) {
 //
 $app->error(function (\Exception $e) use ($app) {
     $result = array(
-        'status'  => 'error',
+        'status'  => Define::RESULT_OKAY,
         'message' => $e->getMessage(),
         'code' => $e->getCode(),
         'file' => $e->getFile(),

@@ -90,7 +90,7 @@ function _sendData(config, sensor) {
           defer.resolve(sensor);
         } catch (e) {
 
-          logger.warn('could not parse the response data into a JSON object. ', e);
+          logger.warn('Error: could not parse the response data into a JSON object. ', e);
           // resolve the unchanged sensor data.
           defer.resolve(sensor);
         }
@@ -100,7 +100,7 @@ function _sendData(config, sensor) {
 
   req.on('error', function(e) {
 
-    logger.warn('"', config.url, '" problem with request: ' + e.message);
+    logger.warn('Error: "', config.url, '" problem with request: ' + e.message);
 
     // resolve the unchanged sensor data.
     defer.resolve(sensor);

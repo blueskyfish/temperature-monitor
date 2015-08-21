@@ -116,7 +116,7 @@ function _updateExecute(conn, sensor) {
 
   logger.trace('before update: ', JSON.stringify(sensor));
 
-  if (sensor.status == status.UPLOADED) {
+  if (sensor.status === status.UPLOADED) {
     logger.debug('save sensor: status is UPLOADED: ', sensorId);
     conn.query(SQL_UPDATE, data, function (err, result) {
       if (err) {
@@ -125,7 +125,7 @@ function _updateExecute(conn, sensor) {
       defer.resolve(sensorId);
     });
   }
-  else if (sensor.status == status.DELETED) {
+  else if (sensor.status === status.DELETED) {
     logger.debug('delete sensor: status is DELETED: ', sensorId);
     conn.query(SQL_DELETE, data, function (err, result) {
       if (err) {
@@ -136,7 +136,7 @@ function _updateExecute(conn, sensor) {
   }
   else {
     process.nextTick(function () {
-      logger.info('Unknown update status from sensor: ', sensorId, ' ??');
+      logger.warn('Error: unknown update status from sensor: ', sensorId, ' ??');
       defer.resolve(sensor);
     });
   }
@@ -167,12 +167,12 @@ provider.saveSensorList = function (config, sensorList) {
 
   return Q.all(promiseList).then(
     function (result) {
-      logger.info('Insert ', result);
+      logger.debug('Insert new sensor data: ', result);
       conn.end();
       return result;
     },
     function (reason) {
-      logger.warn('Insert ', reason);
+      logger.warn('Insert sensor: ', reason);
       conn.end();
       return Q.reject(new Error('storage is failed'));
     }
@@ -193,12 +193,15 @@ provider.getSensorList = function (config) {
       if (err) {
         return defer.reject(err);
       }
-      logger.trace('Result: ', JSON.stringify(results));
+      if (_.size(results) === 0) {
+        return defer.reject('not uploaded sensor list is empty');
+      }
       var
         list = [];
       _.forEach(results, function (sensor) {
         list.push(_modifySensorData(sensor));
       });
+      logger.debug('get not uploaded sensor data: ', JSON.stringify(list));
       defer.resolve(list);
     });
 
@@ -210,22 +213,18 @@ provider.updateSensorList = function (config, sensorList) {
     conn = _openConnection(config),
     promiseList = [];
 
-  logger.trace('update sensor list:');
   _.forEach(sensorList, function (sensor) {
-    if (!sensor.status) {
-      logger.warn('sensor has no status property');
-    }
     promiseList.push(_updateExecute(conn, sensor));
   });
 
   return Q.all(promiseList).then(
     function (result) {
-      logger.info('Update sensor: ', JSON.stringify(result));
+      logger.debug('Update sensor (Success): ', JSON.stringify(result));
       conn.end();
       return result;
     },
     function (reason) {
-      logger.warn('Update sensor', reason);
+      logger.warn('Update sensor (Error): ', reason);
       conn.end();
       return Q.reject(new Error('storage is failed'));
     }

@@ -24,7 +24,8 @@ var
   httpProvider = require('./lib/http-provider'),
   prepareProvider = require('./lib/prepare-provider'),
   sensorProvider = require('./lib/sensor-provider'),
-  databaseProvider = require('./lib/database-provider');
+  databaseProvider = require('./lib/database-provider'),
+  pkg = require('./package.json');
 
 var
   reader,   // serial port reader
@@ -39,7 +40,7 @@ var
  * @private
  */
 function _onReceiveData(data) {
-  logger.info('Receive Data: (size=', _.size(data), ')!');
+  logger.info('Begin: receive Data (size=', _.size(data), ')');
   Q.fcall(function () {
     return prepareProvider.extractLine(data);
   })
@@ -61,18 +62,19 @@ function _onReceiveData(data) {
     .done(
       function (insertIdList) {
         if (insertIdList) {
-          logger.info('Process the sensor dates: ', insertIdList);
+          logger.info('Finish receive data: ');
+          logger.debug(JSON.stringify(insertIdList));
         }
       },
       function (reason) {
-        logger.warn('Warning (Sensor)');
-        logger.warn(reason);
+        logger.info('Warning (Sensor)');
+        logger.info(reason);
       }
     );
 }
 
 function _onScheduleSensor() {
-  logger.debug('schedule sensor list');
+  logger.info('Begin schedule of not uploaded sensor data');
   Q.fcall(function () {
     return databaseProvider.getSensorList(env.database);
   })
@@ -90,11 +92,12 @@ function _onScheduleSensor() {
   })
   .done(
     function (result) {
-      logger.info('schedule sensor list finish: ', result);
+      logger.info('Finish schedule');
+      logger.debug(JSON.stringify(result));
     },
     function (reason) {
-      logger.warn('Warning (Schedule)');
-      logger.warn(reason);
+      logger.info('Warning (Schedule)');
+      logger.info(reason);
     }
   );
 }
@@ -143,7 +146,20 @@ function _shutdown(sigName) {
 function _main() {
 
   var
-    sched = later.parse.recur().every(2).minute();
+    sched;
+
+  switch (env.schedule.unit || 'minute') {
+    case 'hour':
+      sched = later.parse.recur().every(env.schedule.value).hour();
+      break;
+    default:
+    case 'minute':
+      sched = later.parse.recur().every(env.schedule.value).minute();
+      break;
+  }
+
+  logger.info(pkg.name, ' (', pkg.version, ')');
+  logger.config('Schedule: ', env.schedule.value, ' ', env.schedule.unit);
 
   // starts the schedule job with later...
   jobId = later.setInterval(_onScheduleSensor, sched);

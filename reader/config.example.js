@@ -23,6 +23,12 @@ module.exports = {
     separator: '\r\n'                                               // the line end separator
   },
 
+  // The schedule
+  schedule: {
+    value: 20,
+    unit: 'minute'        // possible values: "minute", "hour"
+  },
+
   // The sensor section
   sensor: {
 

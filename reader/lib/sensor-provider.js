@@ -64,7 +64,7 @@ provider.getSensorList = function (config, line) {
       date:         date
     };
     sensorList.push(sensorData);
-    logger.debug('sensor: ', JSON.stringify(sensorData));
   }
+  logger.debug('Read sensor data: ', JSON.stringify(sensorList));
   return sensorList;
 };

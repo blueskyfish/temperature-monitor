@@ -1,0 +1,25 @@
+#
+# temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+#
+# The MIT License (MIT)
+# Copyright (c) 2015 BlueSkyFish
+
+root = true
+
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+[*.{js,json}]
+indent_style = space
+indent_size = 2
+
+[*.sql]
+indent_style = tab
+indent_size = 2
+
+[*.{md,php,html}]
+indent_style = tab
+indent_size = 4

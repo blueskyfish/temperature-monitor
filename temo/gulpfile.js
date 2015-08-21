@@ -24,7 +24,7 @@ var
   target = params.target || '',
 
 // The name of the config file for the distribution
-  configFile = 'app/config/' + target + '.config.php';
+  configFile = 'server/config/' + target + '.config.php';
 
 var
   model = {
@@ -57,30 +57,30 @@ gulp.task('config-file', ['clean'], function () {
   return gulp.src(configFile)
     .pipe(ejs(model, settings))
     .pipe(rename('config.php'))
-    .pipe(gulp.dest('dist/config'));
+    .pipe(gulp.dest('dist/server/config'));
 });
 
 gulp.task('copy-htaccess', ['clean'], function () {
-  return gulp.src(['app/.htaccess'])
+  return gulp.src(['server/.htaccess'])
     .pipe(ejs(model, { ext: ''}))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/server'));
 });
 
 gulp.task('copy-index', ['clean'], function () {
-  return gulp.src(['app/index.php'])
+  return gulp.src(['server/index.php'])
     .pipe(ejs(model, settings))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/server'));
 });
 
 gulp.task('copy-libraries', ['clean'], function () {
-  return gulp.src(['app/lib/*.php'])
+  return gulp.src(['server/lib/*.php'])
     .pipe(ejs(model, settings))
-    .pipe(gulp.dest('dist/lib'));
+    .pipe(gulp.dest('dist/server/lib'));
 });
 
 gulp.task('copy-slim', ['clean'], function () {
-  return gulp.src('app/Slim/**/**')
-    .pipe(gulp.dest('dist/Slim'));
+  return gulp.src('server/Slim/**/**')
+    .pipe(gulp.dest('dist/server/Slim'));
 });
 
 gulp.task('copy-all', [

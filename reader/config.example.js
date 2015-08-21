@@ -43,7 +43,7 @@ module.exports = {
 
   // The external server section
   server: {
-    url: 'http://domain.com/index.php/sensor/upload'                // url to the external server
+    url: 'http://domain.com/path/to/temo/server/upload'             // url to the external server
   }
 
 };

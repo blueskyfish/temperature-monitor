@@ -33,7 +33,7 @@ $app->setName('sensor-server');
 
 
 //
-// Rest Actor: GET [root]/hello
+// Rest Actor: GET /temo/server/hello
 //
 $app->get('/hello', function () use ($app) {
     $result = array(
@@ -47,9 +47,9 @@ $app->get('/hello', function () use ($app) {
 
 
 //
-// Rest Actor: POST [root]/sensor/upload
+// Rest Actor: POST /temo/server/upload
 //
-$app->post('/sensor/upload', function () use ($app) {
+$app->post('/upload', function () use ($app) {
     $sensor = $app->getBodyJson();
 
     $storage = new Storage_Sensor($app);

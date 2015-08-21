@@ -97,7 +97,7 @@ gulp.task('copy-slim', ['clean'], function () {
 
 gulp.task('copy-index', ['clean'], function () {
   return gulp.src('index.html')
-    .pipe(ejs(model, { ext: 'html'}))
+    .pipe(ejs(model, { ext: '.html'}))
     .pipe(gulp.dest('dist'));
 });
 

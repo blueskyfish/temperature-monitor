@@ -35,23 +35,11 @@ class Storage_Sensor
         /** @var \PDO $pdo */
         $pdo = openDatabase($this->app);
 
-        // set the current temperature and humidity
-        $this->updateSensor($pdo,
-          $data['groupId'], $data['nameId'], $data['temperature'], $data['humidity']
-        );
+        // update the current temperature and humidity
+        $this->updateSensor($pdo, $data);
 
-        // insert the new record
-        $stmt = $pdo->prepare('INSERT INTO `sensors` SET
-          `group_id` = :groupId,
-          `name_id` = :nameId,
-          `temperature` = :temperature,
-          `humidity` = :humidity,
-          `date` = :date'
-        );
-        $stmt->execute($data);
-
-        # prepare the result: the inserted id
-        $id = $pdo->lastInsertId();
+        // insert the sensor data
+        $id = $this->insertSensor($pdo, $data);
 
         $result = array(
           'status' => 'okay',
@@ -60,18 +48,28 @@ class Storage_Sensor
         $this->app->sendResult($result);
     }
 
-    private function updateSensor($pdo, $groupId, $nameId, $temperature, $humidity) {
+    private function updateSensor($pdo, $sensor) {
       $stmt = $pdo->prepare('UPDATE `sensor-currents` SET
         `temperature` = :temperature,
-        `humidity` = :humidity
-        WHERE `group_id` = :groupId AND `name_id` = :nameId'
+        `humidity` = :humidity,
+        `date` = :date
+        WHERE `group_id` = :groupId AND `name_id` = :nameId AND `date` < :date'
       );
-      $stmt->execute(array(
-        'groupId'     => $groupId,
-        'nameId'      => $nameId,
-        'temperature' => $temperature,
-        'humidity'    => $humidity
-      ));
+      $stmt->execute($sensor);
+    }
+
+    private function insertSensor($pdo, $sensor) {
+      $stmt = $pdo->prepare('INSERT INTO `sensors` SET
+        `group_id` = :groupId,
+        `name_id` = :nameId,
+        `temperature` = :temperature,
+        `humidity` = :humidity,
+        `date` = :date'
+      );
+      $stmt->execute($sensor);
+
+      # prepare the result: the inserted id
+      return $pdo->lastInsertId();
     }
 
     private function prepareSensorData($sensor) {

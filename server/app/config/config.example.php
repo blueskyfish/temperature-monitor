@@ -23,8 +23,8 @@ function config($app) {
     $app->configureMode('development', function () use ($app) {
         $app->config(array(
             'debug' => true,
-            'database.dsn' => 'mysql:dbname=XXXX;host=localhost;port=3305',
-            'database.user' => 'dbuser',
+            'database.dsn' => 'mysql:dbname=XXXX;host=localhost;port=3306',
+            'database.user' => 'dbUser',
             'database.pass' => 'dbPassword'
         ));
     });

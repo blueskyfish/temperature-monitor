@@ -65,8 +65,8 @@ POST: /sensor/upload
 
 ```js
 {
-  "groupd_id": "{number}",
-  "name_id": "{number}",
+  "groupd_id":   "{number}",
+  "name_id":     "{number}",
   "temperature": "{number}",
   "humidity":    "{number}",
   "date":        "{string: yyyy-mm-dd HH:mm:ss}"

@@ -24,7 +24,7 @@ var
   target = params.target || '',
 
 // The name of the config file for the distribution
-  configFile = 'server/config/' + target + '.config.php';
+  configFile = 'shares/config/' + target + '.config.php';
 
 var
   model = {
@@ -57,38 +57,58 @@ gulp.task('config-file', ['clean'], function () {
   return gulp.src(configFile)
     .pipe(ejs(model, settings))
     .pipe(rename('config.php'))
-    .pipe(gulp.dest('dist/server/config'));
+    .pipe(gulp.dest('dist/shares/config'));
 });
 
-gulp.task('copy-htaccess', ['clean'], function () {
+gulp.task('copy-server-htaccess', ['clean'], function () {
   return gulp.src(['server/.htaccess'])
     .pipe(ejs(model, { ext: ''}))
     .pipe(gulp.dest('dist/server'));
 });
 
-gulp.task('copy-index', ['clean'], function () {
+gulp.task('copy-server-index', ['clean'], function () {
   return gulp.src(['server/index.php'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist/server'));
 });
 
-gulp.task('copy-libraries', ['clean'], function () {
-  return gulp.src(['server/lib/*.php'])
+gulp.task('copy-server-library', ['clean'], function () {
+  return gulp.src('server/lib/*.php')
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist/server/lib'));
 });
 
+gulp.task('copy-libraries', ['clean', 'copy-libaries-htaccess'], function () {
+  return gulp.src(['shares/lib/*.php'])
+    .pipe(ejs(model, settings))
+    .pipe(gulp.dest('dist/shares/lib'));
+});
+
+gulp.task('copy-libaries-htaccess', ['clean'], function () {
+  return gulp.src(['shares/.htaccess'])
+    .pipe(ejs(model, { ext: ''}))
+    .pipe(gulp.dest('dist/shares'));
+});
+
 gulp.task('copy-slim', ['clean'], function () {
-  return gulp.src('server/Slim/**/**')
-    .pipe(gulp.dest('dist/server/Slim'));
+  return gulp.src('shares/Slim/**/**')
+    .pipe(gulp.dest('dist/shares/Slim'));
+});
+
+gulp.task('copy-index', ['clean'], function () {
+  return gulp.src('index.html')
+    .pipe(ejs(model, { ext: '.html'}))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copy-all', [
   'config-file',
-  'copy-index',
-  'copy-htaccess',
+  'copy-server-index',
+  'copy-server-htaccess',
+  'copy-server-library',
   'copy-libraries',
-  'copy-slim'
+  'copy-slim',
+  'copy-index'
 ]);
 
 /**

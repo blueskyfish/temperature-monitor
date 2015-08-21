@@ -8,7 +8,10 @@
  * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
  */
 
-namespace sensor;
+namespace sensor\server;
+
+use sensor\shares\DB;
+use sensor\shares\Define;
 
 /**
  * It stores the sensor data.
@@ -33,7 +36,7 @@ class Storage_Sensor
         $data = $this->prepareSensorData($sensor);
 
         /** @var \PDO $pdo */
-        $pdo = openDatabase($this->app);
+        $pdo = DB::openDatabase($this->app);
 
         // update the current temperature and humidity
         $this->updateSensor($pdo, $data);
@@ -42,7 +45,7 @@ class Storage_Sensor
         $id = $this->insertSensor($pdo, $data);
 
         $result = array(
-          'status' => 'okay',
+          'status' => Define::RESULT_OKAY,
           'id'     => $id
         );
         $this->app->sendResult($result);

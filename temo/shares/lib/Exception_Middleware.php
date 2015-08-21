@@ -8,7 +8,7 @@
  * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
  */
 
-namespace sensor;
+namespace sensor\shares;
 
 /**
  * It catches an exception that thrown during the process.

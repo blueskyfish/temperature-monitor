@@ -31,7 +31,7 @@ class Exception_Middleware extends \Slim\Middleware
           'line' => $e->getLine(),
           'trace' => $e->getTraceAsString()
       );
-      $this->getApplication()->sendResult($result, HTTP_BAD_REQUEST);
+      $this->getApplication()->sendResult($result, Define::HTTP_BAD_REQUEST);
     }
   }
 }

@@ -11,11 +11,12 @@
 
 var
   _ = require('lodash'),
-  dateformat = require('dateformat'),
   logger = require('bluesky-logger');
 
 var
-  DATE_PATTERN = 'yyyy-mm-dd HH:MM:ss',
+  dateUtil = require('./date-util');
+
+var
   SENSOR_COUNT = 8;
 
 function _parseAndConvertToInt(text) {
@@ -44,7 +45,7 @@ var provider = module.exports = {
  */
 provider.getSensorList = function (config, line) {
   var
-    date = dateformat(new Date(), DATE_PATTERN),
+    date = dateUtil.format(new Date()),
     dataList = line.split(';'),
     sensorData,
     sensorList = [];

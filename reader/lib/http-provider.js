@@ -22,12 +22,29 @@ var
   httpStatus = require('./http-status'),
   sensorStatus = require('./sensor-status');
 
+function _preparePostData(sensor) {
+  var
+    data = {};
+
+  _.forEach(sensor, function (value, name) {
+    switch (name) {
+      case 'sensor_id':
+      case 'sensorId':
+      case 'status':
+        break;
+      default:
+        data[name] = value;
+        break;
+    }
+  });
+  return JSON.stringify(data);
+}
 
 
 function _sendData(config, sensor) {
   var
     defer = Q.defer(),
-    postData = JSON.stringify(sensor),
+    postData = _preparePostData(sensor),
     httpServer = url.parse(config.url),
     options = {
       hostname: httpServer.hostname,

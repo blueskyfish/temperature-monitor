@@ -55,7 +55,7 @@ function _getContextPath() {
   switch(mMode) {
     case 'test':
     case 'prod':
-      return 'dest/' + mMode;
+      return '/temo/monitor/';
     default:
       return '/monitor/';
   }
@@ -131,7 +131,7 @@ module.exports = {
    * @return {string}
    */
   getArchiveFilename: function () {
-    return dateformat(new Date(), 'yyyymmddHHMMss') + '-<%= appName %>.zip';
+    return dateformat(new Date(), 'yyyymmddHHMMss') + '-temperature-monitor.zip';
   },
 
   /**

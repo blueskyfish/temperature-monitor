@@ -1,20 +1,17 @@
 {
   "name": "temperature-monitor",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "A html5 application shows the sensor data.",
-  "keywords": [
-
-  ],
+  "keywords": [],
   "private": true,
   "author": "BlueSkyFish <blueskyfish@blueskyfish.de>",
   "license": "The MIT License (MIT)",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/blueskyfish/temperature-monitor.git"
   },
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
     "dateformat": "1.0.11",
     "del": "1.2.0",

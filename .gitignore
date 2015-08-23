@@ -5,6 +5,7 @@
 # Copyright (c) 2015 BlueSkyFish
 #
 
+.idea/
 */.idea/
 *.iml
 

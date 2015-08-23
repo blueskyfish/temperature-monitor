@@ -1,0 +1,43 @@
+//
+// temperature-monitoring - http://github.com/blueskyfish/temperature-monitor.git
+//
+// The MIT License (MIT)
+// Copyright (c) 2015 BlueSkyFish
+//
+
+
+@import (reference) "_styles/variables";
+
+
+//
+// Material Toolbar
+//
+md-toolbar {
+
+  .temo-menu {
+    background-color: transparent;
+    border: none;
+    height: 38px;
+    margin: 16px;
+    width: 36px;
+    min-width: 36px;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size:   28px;
+  }
+}
+
+//
+// Tablet --> Device-Width
+//
+@media only screen and (min-width: @device-tablet-min-width) {
+
+  md-toolbar {
+
+    h1 {
+      padding-left: 0.8rem;
+    }
+  }
+}

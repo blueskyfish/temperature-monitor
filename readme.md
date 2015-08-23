@@ -3,20 +3,34 @@
 # Temperature Monitoring
 
 > A Collection of application for collection temperature and humidity data.  
-> An application reads the sensor data and loads on an external restful server. Restful server has an interface in order to evaluate the sensor data.
+> An application reads the sensor data and loads on an external restful server. Restful server has an interface in order to evaluate the sensor data.  
+> A web application is presenting the sensor data.
 
 
-## Overview
+## Technical Overview
 
 ![Overview](overview.png)
 
 
-## Roadmap
+## Application Overview
 
-* The reader application receives the data and send over the internet to the server.
-* The reader application get the sensor configuration from the server.
-* The server application has a interface for the receiving the data from the reader application.
-*
+### Reader Application
+
+The reader app is installed on a raspberry pi. The sensor reader is collecting the data from the sensor.
+
+### Server Application
+
+The server application is installed on a normal webspace (*It is programming in PHP*). The reader app sends the collected sensor data to the server.
+
+### Viewer Application
+
+> not yet implemented
+
+The viewer application is a interface for requesting the sensor data.
+
+### Temperature Monitor
+
+The temperature monitor is a web application in order to present the sensor data.
 
 
 ## License

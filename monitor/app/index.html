@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="temoApp" ng-controller="MainController">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{ 'APP.TITLE' | translate }}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+  <!-- build:css assets/css/vendors.min.css -->
+  <link rel="stylesheet" href="assets/css/vendors.css">
+  <!-- /build -->
+  <!-- build:css assets/css/application.min.css -->
+  <link rel="stylesheet" href="assets/css/application.css">
+  <!-- /build -->
+</head>
+<body layout="column">
+
+  <md-toolbar layout="row">
+    <md-button class="temo-menu" hide-gt-sm ng-click="toggleSideBar()" aria-label="Sensor List">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+    <h1 translate="APP.TITLE"></h1>
+  </md-toolbar>
+
+  <div flex layout="row">
+    <md-sidenav layout="coloumn" md-component-id="left" class="md-whiteframe-z2 temo-sidenav" md-is-locked-open="$mdMedia('gt-sm')">
+      <h2>Sidebar</h2>
+    </md-sidenav>
+    <md-content class="temo-content" flex>
+      <p>Body</p>
+    </md-content>
+  </div>
+
+<!-- build:js assets/js/vendors.min.js -->
+<script type="text/javascript" src="assets/js/vendors.js"></script>
+<!-- /build -->
+<!-- build:js assets/js/application.min.js -->
+<script type="text/javascript" src="assets/js/application.js"></script>
+<!-- /build -->
+
+</body>
+</html>

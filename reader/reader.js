@@ -1,5 +1,5 @@
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -36,6 +36,10 @@ var
  * Callback function for receive data from the sensor reader.
  *
  * It is processing many steps by different providers. The processing is executing asynchronously.
+ *
+ * ```
+ * $1;1;;27.0;23,8;24,3;;;;;;43;57;53;;;;;;;;;;;0
+ * ```
  *
  * @param {string} data the plain text with the sensor data.
  * @private

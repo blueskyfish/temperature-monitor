@@ -1,6 +1,6 @@
 <?php
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -21,6 +21,7 @@ require('lib/Define.php');
 
 require('lib/Application.php');
 require('lib/Exception_Middleware.php');
+
 require('lib/Storage_Sensor.php');
 
 use Slim\Slim;
@@ -44,7 +45,7 @@ $app->setName('sensor-server');
 $app->get('/hello', function () use ($app) {
     $result = array(
       'status' => Define::RESULT_OKAY,
-      'message' => 'Hello World',
+      'message' => 'Hello World, I am the server',
       'target' => '<%= target %>',
       'version' => '<%= version %>'
     );

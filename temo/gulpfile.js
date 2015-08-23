@@ -11,6 +11,9 @@
 'use strict';
 
 var
+  path = require('path');
+
+var
   del = require('del'),
   dateformat = require('dateformat'),
   ejs = require('gulp-ejs'),
@@ -60,22 +63,46 @@ gulp.task('config-file', ['clean'], function () {
     .pipe(gulp.dest('dist/shares/config'));
 });
 
-gulp.task('copy-server-htaccess', ['clean'], function () {
-  return gulp.src(['server/.htaccess'])
+function taskCopyHtAccess(rootPath) {
+  return gulp.src(path.join(rootPath, '.htaccess'))
     .pipe(ejs(model, { ext: ''}))
-    .pipe(gulp.dest('dist/server'));
+    .pipe(gulp.dest(path.join('dist', rootPath)));
+}
+
+function taskCopyIndex(rootPath) {
+  return gulp.src(path.join(rootPath, 'index.php'))
+    .pipe(ejs(model, settings))
+    .pipe(gulp.dest(path.join('dist', rootPath)));
+}
+
+function taskCopyLibrary(rootPath) {
+  return gulp.src(path.join(rootPath, 'lib/*.php'))
+    .pipe(ejs(model, settings))
+    .pipe(gulp.dest(path.join('dist', rootPath, 'lib')));
+}
+
+gulp.task('copy-server-htaccess', ['clean'], function () {
+  return taskCopyHtAccess('server');
+});
+
+gulp.task('copy-viewer-htaccess', ['clean'], function () {
+  return taskCopyHtAccess('viewer');
 });
 
 gulp.task('copy-server-index', ['clean'], function () {
-  return gulp.src(['server/index.php'])
-    .pipe(ejs(model, settings))
-    .pipe(gulp.dest('dist/server'));
+  return taskCopyIndex('server');
+});
+
+gulp.task('copy-viewer-index', ['clean'], function () {
+  return taskCopyIndex('viewer');
 });
 
 gulp.task('copy-server-library', ['clean'], function () {
-  return gulp.src('server/lib/*.php')
-    .pipe(ejs(model, settings))
-    .pipe(gulp.dest('dist/server/lib'));
+  return taskCopyLibrary('server');
+});
+
+gulp.task('copy-viewer-library', ['clean'], function () {
+  return taskCopyLibrary('viewer');
 });
 
 gulp.task('copy-libraries', ['clean', 'copy-libaries-htaccess'], function () {
@@ -106,6 +133,9 @@ gulp.task('copy-all', [
   'copy-server-index',
   'copy-server-htaccess',
   'copy-server-library',
+  'copy-viewer-index',
+  'copy-viewer-htaccess',
+  'copy-viewer-library',
   'copy-libraries',
   'copy-slim',
   'copy-index'

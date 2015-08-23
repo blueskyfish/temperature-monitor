@@ -26,8 +26,10 @@ function _buildKey(sensor) {
 /**
  * @class CacheProvider
  * @description
- * The CacheProvider is filter the sensor list. The background is, the sensor reader fires every
- * time of a sensor is commit his data. But the sensor reader fire the complete sensor line.
+ * The CacheProvider is filter the sensor list.
+ *
+ * The background: The sensor-reader sends every time the line, when a sensor is transmitted
+ * his data. But the sensor-reader sends the whole line with all sensor data.
  *
  */
 var provider = module.exports = {

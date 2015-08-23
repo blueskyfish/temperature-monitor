@@ -11,6 +11,7 @@
 
 var
   _ = require('lodash'),
+  logger = require('bluesky-logger'),
   Q = require('q');
 
 var
@@ -29,8 +30,14 @@ var provider = module.exports = {
 };
 
 provider.extractLine = function (data) {
+  var
+    line;
+
   if (!data || !_.startsWith(data, PREFIX_LINE) || !_.endsWith(data, SUFFIX_LINE)) {
     return Q.reject(new Error('receive invalidate data -> not processing'));
   }
-  return __extract(data);
+  line = __extract(data);
+  logger.trace('Sensor Raw:  ', data);
+  logger.debug('Sensor Line: ', line);
+  return line;
 };

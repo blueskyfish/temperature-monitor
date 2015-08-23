@@ -134,7 +134,14 @@ var provider = module.exports = {
  */
 provider.sendSensorList = function (config, sensorList) {
   var
-    promiseList = [];
+    promiseList;
+
+  if (_.size(sensorList) === 0) {
+    return Q.reject('sensor list is empty, nothing to upload');
+  }
+
+  // upload the sensor list
+  promiseList = [];
 
   _.forEach(sensorList, function (sensor) {
     promiseList.push(_sendData(config, sensor));

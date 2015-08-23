@@ -21,6 +21,7 @@ var
 
 var
   env = require('./lib/env'),
+  cacheProvider = require('./lib/cache-provider'),
   httpProvider = require('./lib/http-provider'),
   prepareProvider = require('./lib/prepare-provider'),
   sensorProvider = require('./lib/sensor-provider'),
@@ -49,6 +50,12 @@ function _onReceiveData(data) {
     })
     .then(function (sensorList) {
       return _traceStep('Sensor List (extract)', sensorList);
+    })
+    .then(function (sensorList) {
+      return cacheProvider.filterSensorList(env.cache, sensorList);
+    })
+    .then(function (sensorList) {
+      return _traceStep('SensorList (cache filtered)', sensorList);
     })
     .then(function (sensorList) {
       return httpProvider.sendSensorList(env.server, sensorList);

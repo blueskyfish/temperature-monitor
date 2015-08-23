@@ -21,7 +21,7 @@ var
 
 var
   SQL_INSERT = 'INSERT INTO `sensor-local` SET ?',
-  SQL_SELECT = 'SELECT sensor_id, group_id, name_id, temperature, humidity, date, status FROM `sensor-local` WHERE `status` <> "UPLOADED" LIMIT 1' ,
+  SQL_SELECT = 'SELECT sensor_id, group_id, name_id, temperature, humidity, date, status FROM `sensor-local` WHERE `status` <> "UPLOADED" LIMIT 5' ,
   SQL_UPDATE = 'UPDATE `sensor-local` SET status = "UPLOADED" WHERE sensor_id = ?',
   SQL_DELETE = 'DELETE FROM `sensor-local` WHERE sensor_id = ?';
 

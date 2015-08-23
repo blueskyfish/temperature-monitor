@@ -29,6 +29,11 @@ module.exports = {
     unit: 'minute'        // possible values: "minute", "hour"
   },
 
+  // the cache
+  cache: {
+    timePeriod: 170000    // 2 minutes und 50 seconds.
+  },
+
   // The sensor section
   sensor: {
 

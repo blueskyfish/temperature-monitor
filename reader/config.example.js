@@ -14,7 +14,18 @@ module.exports = {
 
   // The logger section
   // (values: 'all', 'warn', 'info', 'config', 'debug', 'trace', 'none')
-  level: 'debug',
+  logger: {
+    namespaces: {
+      'root': 'config',
+      'sensor': 'config',
+      'sensor.provider': 'info',
+      'sensor.provider.filter': 'debug',
+      'sensor.provider.database': 'info',
+      'sensor.provider.prepare': 'debug',
+      'sensor.provider.sensor': 'debug'
+    },
+    separator: '.'
+  },
 
   // The serial port section
   port: {

@@ -15,7 +15,8 @@
 var
   _ = require('lodash'),
   later = require('later'),
-  logger = require('bluesky-logger'),
+  loggerFactory = require('bluesky-logger'),
+  logger = loggerFactory.getLogger('sensor'),
   serialport = require('serialport'),
   Q = require('q');
 
@@ -159,6 +160,11 @@ function _main() {
   var
     sched;
 
+  // configuration of logger
+  loggerFactory
+    .config(env.logger.namespaces)
+    .setSeparator(env.logger.separator);
+
   switch (env.schedule.unit || 'minute') {
     case 'hour':
       sched = later.parse.recur().every(env.schedule.value).hour();
@@ -169,6 +175,7 @@ function _main() {
       break;
   }
 
+  
   logger.info(pkg.name, ' (', pkg.version, ')');
   logger.config('Schedule: ', env.schedule.value, ' ', env.schedule.unit);
 

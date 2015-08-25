@@ -1,5 +1,5 @@
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -15,7 +15,7 @@ var
 
 var
   _ = require('lodash'),
-  logger = require('bluesky-logger'),
+  logger = require('bluesky-logger').getLogger('sensor.provider.http'),
   Q = require('q');
 
 var

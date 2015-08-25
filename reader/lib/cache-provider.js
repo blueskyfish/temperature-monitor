@@ -11,7 +11,7 @@
 
 var
   _ = require('lodash'),
-  logger = require('bluesky-logger');
+  logger = require('bluesky-logger').getLogger('sensor.provider.cache');
 
 
 

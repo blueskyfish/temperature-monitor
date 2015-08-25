@@ -1,7 +1,7 @@
 {
   "name": "sensor-reader",
   "description": "reads the temperature dates from an ELV sensor-reader",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "BlueSkyFish <blueskyfish@blueskyfish.de>",
   "keywords": [
     "node",
@@ -12,7 +12,7 @@
     "humidity"
   ],
   "dependencies": {
-    "bluesky-logger": "0.2.2",
+    "bluesky-logger": "0.3.1",
     "dateformat": "1.0.11",
     "later": "1.1.6",
     "lodash": "3.10.1",

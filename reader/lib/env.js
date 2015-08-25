@@ -16,7 +16,8 @@
  *   help               shows the usage of the application
  *   level              set the log level
  * Configuration:
- *   level              set the log level
+ *   level.namespaces   a key / value map (key = namespace, value = log level)
+ *   level.separator    the separator in the namespace.
  *   sensor.groupId     the sensor group id
  *   database.name      the database name
  *   database.host      the host of the database server
@@ -40,7 +41,6 @@ var
 
 var
   _ = require('lodash'),
-  logger = require('bluesky-logger'),
   minimist = require('minimist');
 
 var
@@ -69,22 +69,6 @@ function _readConfigFileAndReturnMap(configName) {
 env = _.assign({}, params, _readConfigFileAndReturnMap(params.config));
 
 env.name = 'env (Environment)';
-
-
-//
-// Adjust the log level
-//
-if (env.level) {
-  env.level = logger.toLogLevel(env.level);
-}
-else {
-  env.level = logger.LEVEL_DEBUG;
-}
-
-//
-// set the log level to the logger
-//
-logger.setLevel(env.level);
 
 //
 // Exports the env object

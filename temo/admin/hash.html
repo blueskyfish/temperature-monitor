@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Hash Generator for Temo</title>
+<style>
+	html, html body {
+		font-size: 14px;
+		font-family: 'Arial';
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+	nav, main {
+		padding-left: 0.8rem;
+		padding-right: 0.8rem;
+	}
+	nav {
+		margin-top: -4px;
+		background: #000044;
+		color: #ffffff;
+	}
+	p, h1 {
+		margin: 0.2rem 0;
+	}
+	h1 {
+		font-size: 2.1rem;
+	}
+	button, input {
+		width: 100%;
+		margin: 0.2rem 0;
+		font-size: 1.4rem;
+	}
+	* {
+		 box-sizing: border-box;
+	}
+	#result {
+		margin: 0.4rem 0;
+		padding: 0.4rem;
+		background: #efefef;
+		font-size: 1.3rem;
+		display: block;
+	}
+</style>
+</head>
+<body>
+
+<nav role="navigation">
+	<h1>Hash Generator</h1>
+</nav>
+
+<main role="main">
+	<section class="row">
+		<section class="one column">
+			<p>Ergebnis
+				<span id="result">&nbsp;</span>
+			</p>
+		</section>
+	</section>
+	<section class="row">
+		<section class="one column">
+			<label>Salt <small>4 bis 8 Zahlen</small><br>
+				<input type="text" id="salt">
+			</lable>
+		</section>
+	</section>
+	<section class="row">
+		<section class="one column">
+			<label>PIN<br>
+				<input type="number" id="pin">
+			</lable>
+		</section>
+	</section>
+	<section class="row">
+		<section class="one column">
+			<button id="calculate">Berechnen</button>
+		</section>
+	</section>
+
+</main>
+
+<script src="assets/js/hashids.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script type="text/javascript">
+	console.log('Test');
+	$(function () {
+
+		$('#calculate').on('click', function () {
+			var hasher = new Hashids($('#salt').val());
+			var pin = $('#pin').val();
+			var len = pin.length;
+			if (len < 4 || len > 8) {
+				alert('PIN muss zwischen 4 und 8 Zeichen haben (actual: ' + len + ')!');
+				return;
+			}
+			var values = [];
+			for (var i = 0; i < len; i++) {
+				values.push(parseInt(pin.charAt(i), 10));
+			}
+			var result = hasher.encode(values);
+			$('#result').text(result);
+		});
+	});
+</script>
+</body>
+</html>

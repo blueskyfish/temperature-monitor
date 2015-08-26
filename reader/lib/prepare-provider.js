@@ -22,7 +22,7 @@ function __extract(line) {
   var
     len = line.length;
 
-  return line.substring(PREFIX_LINE.length, len - SUFFIX_LINE.length).replace(/,/, '.');
+  return line.substring(PREFIX_LINE.length, len - SUFFIX_LINE.length).replace(/,/g, '.');
 }
 
 var provider = module.exports = {

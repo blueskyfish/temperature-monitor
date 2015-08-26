@@ -20,9 +20,8 @@ require('lib/DB.php');
 require('lib/Define.php');
 
 require('lib/Application.php');
-require('lib/Exception_Middleware.php');
 
-require('lib/Sensor_Provider.php');
+require_once('lib/Sensor_Provider.php');
 
 use Slim\Slim;
 use sensor\shares\Application;
@@ -57,6 +56,14 @@ $app->get('/hello', function () use ($app) {
 $app->get('/info', function () use ($app) {
   $provider = new SensorProvider($app);
   $provider->sendInfo();
+});
+
+//
+// Rest Action GET: /viewer/sensor/:id
+//
+$app->get('/sensor/:id', function ($id) use ($app) {
+  $provider = new SensorProvider($app);
+  $provider->sendSensor($id);
 });
 
 //

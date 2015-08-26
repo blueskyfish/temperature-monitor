@@ -20,7 +20,6 @@ require('lib/DB.php');
 require('lib/Define.php');
 
 require('lib/Application.php');
-require('lib/Exception_Middleware.php');
 
 require('lib/Storage_Sensor.php');
 

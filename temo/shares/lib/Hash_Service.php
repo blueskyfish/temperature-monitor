@@ -1,0 +1,43 @@
+<?php
+/*
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2015 BlueSkyFish
+ *
+ * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
+ */
+
+namespace sensor\shares;
+
+require_once('Hashids/HashGenerator.php');
+require_once('Hashids/Hashids.php');
+
+use Hashids\Hashids;
+
+class HashService
+{
+  private static $_HashIds = null;
+
+  public static function getInstance()
+  {
+    if (is_null(self::$_HashIds)) {
+      self::$_HashIds = new Hashids('temperature-monitor is cool :-)');
+    }
+    return self::$_HashIds;
+  }
+
+  public static function encode() {
+    $args = func_get_args();
+    $hashIds = self::getInstance();
+    return call_user_func_array(array($hashIds, 'encode'), $args);
+  }
+
+  public static function decode() {
+    $args = func_get_args();
+    $hashIds = self::getInstance();
+    return call_user_func_array(array($hashIds, 'decode'), $args);
+  }
+}
+
+?>

@@ -38,6 +38,16 @@ class HashService
     $hashIds = self::getInstance();
     return call_user_func_array(array($hashIds, 'decode'), $args);
   }
+
+  public static function encodeHex($hex) {
+    $hashIds = self::getInstance();
+    return $hashIds->encode_hex($hex);
+  }
+
+  public static function decodeHex($hex) {
+    $hashIds = self::getInstance();
+    return $hashIds->decode_hex($hex);
+  }
 }
 
 ?>

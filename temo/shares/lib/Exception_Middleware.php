@@ -10,10 +10,14 @@
 
 namespace sensor\shares;
 
+require_once('Slim/Middleware.php');
+
+use \Slim\Middleware;
+
 /**
  * It catches an exception that thrown during the process.
  */
-class Exception_Middleware extends \Slim\Middleware
+class Exception_Middleware extends Middleware
 {
 
   public function call()

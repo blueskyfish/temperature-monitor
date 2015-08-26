@@ -26,10 +26,13 @@ GET: /viewer/info
   status: "okay",
   sensors: [
     {
-      url:         '/viewer/id',
+      url:         '{string}',
       name:        '{string}',
       description: '{string}',
-      icon:        '{string}'
+      icon:        '{string}',
+      temperature: '{number}',
+      humidity:    '{number}',
+      date:        '{string: yyyy-MM-dd HH:mm:ss}'
     }
   ]
 }

@@ -11,6 +11,9 @@
 
 ![Overview](overview.png)
 
+One Sensor Reader can read from 8 sensors. The Reader extract the temperature and humidity and sends to an external Sensor Server over the internet.
+
+This Server collect from all Readers the data. The Server Viewer has an interface for presentation the sensor data.
 
 ## Application Overview
 
@@ -26,7 +29,7 @@ The server application is installed on a normal webspace (*It is programming in 
 
 > not yet implemented
 
-The viewer application is a interface for requesting the sensor data.
+Is the backend for the **Temperature Monitor** app.
 
 ### Temperature Monitor
 

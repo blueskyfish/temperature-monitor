@@ -18,6 +18,7 @@ module.exports = {
     namespaces: {
       'root': 'config',
       'sensor': 'config',
+      'sensor.main': 'info',
       'sensor.provider': 'info',
       'sensor.provider.filter': 'debug',
       'sensor.provider.database': 'info',

@@ -16,7 +16,7 @@ var
   _ = require('lodash'),
   later = require('later'),
   loggerFactory = require('bluesky-logger'),
-  logger = loggerFactory.getLogger('sensor'),
+  logger = loggerFactory.getLogger('sensor.main'),
   serialport = require('serialport'),
   Q = require('q');
 

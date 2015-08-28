@@ -72,12 +72,15 @@ class SensorProvider
   }
 
   public function sendSensor($id)
-  {  
+  {
+    list($groupId, $nameId) = HashService::decode($id);
+
     $result = array(
       'status' => Define::RESULT_ERROR,
-      'message' => "Unknown sensor $id"
+      'message' => "Unknown sensor $id",
+      'id' => "$groupId - $nameId"
     );
-    $this->app->sendResult($result, Define::HTTP_BAD_REQUEST);
+    $this->app->sendResult($result, Define::HTTP_NOT_FOUND);
   }
 }
 

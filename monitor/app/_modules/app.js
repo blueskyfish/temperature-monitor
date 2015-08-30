@@ -14,6 +14,7 @@
    var
      app = angular.module('temoApp', [
        'ngMaterial',
+       'ngSanitize',
        'pascalprecht.translate'
      ]);
 

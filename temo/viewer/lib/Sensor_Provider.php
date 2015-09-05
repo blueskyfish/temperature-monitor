@@ -31,7 +31,7 @@ class SensorProvider
   {
     // get the header field "x-monitoring-auth"
     $hashKey = $this->app->getAuthToken();
-    $contentPath = $this->app->getContextPath();
+    // $contentPath = $this->app->getContextPath();
 
     $sensorList = array();
 
@@ -52,7 +52,7 @@ class SensorProvider
     while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
       $id = HashService::encode($row['group_id'], $row['name_id']);
       $sensorList[] = array(
-        'url'         => "$contentPath/sensor/$id",
+        'id'          => $id,
         'name'        => $row['name'],
         'description' => $row['description'],
         'icon'        => $row['icon'],

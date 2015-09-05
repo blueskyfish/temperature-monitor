@@ -16,6 +16,13 @@ module.exports = {
     rootPaths: [
     ],
     port: 9700,
+    options: {
+      default: {
+        rewriteRules: [
+          '^/temo/viewer(.*)$ http://localhost/temo/viewer/$1 [P]'
+        ]
+      }
+    }
   },
 
   // task 'app-scripts'
@@ -51,7 +58,7 @@ module.exports = {
         evil: true,
         es3: true,
         strict: true,
-        undef:true,
+        undef: false,
         latedef: false,
         predef: [
           // insert here the pre defined objects
@@ -143,7 +150,7 @@ module.exports = {
       },
       templates: {
         //filename: 'templates.js',
-        module: 'app.temo',
+        module: 'howarm',
         standalone: false,
         path: function (path, base) {
           return path.replace(base, '_modules/');
@@ -170,9 +177,7 @@ module.exports = {
       //'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-animate/angular-animate.js',
-      'bower_components/angular-aria/angular-aria.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/angular-material/angular-material.js',
       'bower_components/angular-translate/angular-translate.js',
       'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
     ],
@@ -184,11 +189,10 @@ module.exports = {
     name: 'vendors.css',
     minify: 'vendors.min.css',
     sources: [
-      // TODO
-      //'bower_components/normalize.css/normalize.css',
-      //'bower_components/font-awesome/css/font-awesome.css',
-      //'bower_components/angular/angular-csp.css',
-      'bower_components/angular-material/angular-material.css'
+      'bower_components/foundation/css/normalize.css',
+      'bower_components/angular/angular-csp.css',
+      'bower_components/foundation/css/foundation.css',
+      'bower_components/components-font-awesome/css/font-awesome.css'
     ],
     dest: '/assets/css',
     options: {
@@ -213,8 +217,7 @@ module.exports = {
   // task 'vendor-fonts'
   vendorFonts: {
     sources: [
-      // TODO
-      'bower_components/font-awesome/fonts/*.{ttf,woff,woff2,eot,svg}'
+      'bower_components/components-font-awesome/fonts/*.{ttf,woff,woff2,eot,svg}'
     ],
     dest: '/assets/fonts'
   },

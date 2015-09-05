@@ -11,7 +11,7 @@
 
    'use strict';
 
-   angular.module('temoApp').config(['$translateProvider', ConfigTranslate]);
+   angular.module('howarm').config(['$translateProvider', ConfigTranslate]);
 
    function ConfigTranslate($translateProvider) {
      $translateProvider.useStaticFilesLoader({

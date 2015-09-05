@@ -19,14 +19,13 @@ gulp.task('app-build', [
   'app-style-images',     //
   'app-jshint',
   'app-scripts',          // collect & concat the application scripts
-  // TODO 'app-translate',        // collect all translation json files
   'app-index',            // copy & optimize the index.html
-  //'app-templates',        // collects the html templates & insert to templateCache
+  'app-templates',        // collects the html templates & insert to templateCache
   'app-images',           // copy & optimize the images
-  'app-translate',        // copy and minifiy the translation files
+  'app-translate',        // copy (& minifiy) the translation files
   'vendor-fonts',         // copy the awesome fonts
-  'vendor-scripts',       // collect & concat the vendor scripts
-  'vendor-styles',        // collect & concat the vendor styles
+  'vendor-scripts',       // collect, concat (& minify) the vendor scripts
+  'vendor-styles',        // collect, concat (& minify) the vendor styles
   'vendor-style-images',  //
-  'modernizr'             // copy & uglify the modernizr script
+  'modernizr'             // copy (& uglify) the modernizr script
 ]);

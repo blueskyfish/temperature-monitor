@@ -57,7 +57,7 @@ function _getContextPath() {
     case 'prod':
       return '/temo/monitor/';
     default:
-      return '/monitor/';
+      return '/';
   }
 }
 

@@ -11,23 +11,11 @@
 
    'use strict';
 
-   var
-     app = angular.module('temoApp', [
-       'ngMaterial',
+   angular
+     .module('howarm', [
+       'ngAnimate',
        'ngSanitize',
        'pascalprecht.translate'
      ]);
-
-   app.controller('MainController', ['$scope', '$mdSidenav', MainController]);
-
-   function MainController($scope, $mdSidenav) {
-
-     $scope.toggleSideBar = function () {
-       $mdSidenav('left').toggle().then(function () {
-         console.log('Tataa');
-       });
-     };
-
-   }
 
  } ());

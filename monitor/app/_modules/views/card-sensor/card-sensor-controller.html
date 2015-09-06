@@ -6,18 +6,16 @@
     ng-swipe-right="swipeRight()"
     ng-swipe-up="swipeUp($event)"
     ng-swipe-down="swipeDown($event)">
-    <h2 class="card-sensor-name">Sensor Name</h2>
-    <p class="card-sensor-temperature">
-      -23,9°
-    </p>
-    <p class="card-sensor-date">13:34 04.09.2015</p>
+    <h2 class="card-sensor-name">{{ sensor.name }}</h2>
+    <p class="card-sensor-temperature">{{ sensor.temperature }}</p>
+    <p class="card-sensor-date">{{ sensor.date }}</p>
     <div class="card-sensor-table">
       <p class="text-left left">Feuchtigkeit</p>
-      <p class="text-right right">44%</p>
+      <p class="text-right right">{{ sensor.humidity }}</p>
     </div>
     <p class="card-sensor-description">
-      Das ist eine Beschreibung, die sehr lang ist und sich über mehrer Zeilen zieht...
+      {{ sensor.description }}
     </p>
   </section>
-  <hw-pagination page-count="sensorCount" page-current="sensorCurrent" item-click="changeSensor(page, $event)"></hw-pagination>
+  <hw-pagination page-count="sensorList.length" page-current="sensorCurrent" item-click="changeSensor(page, $event)"></hw-pagination>
 </section>

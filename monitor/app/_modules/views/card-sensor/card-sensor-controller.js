@@ -17,17 +17,18 @@
       '$scope',
       '$timeout',
       'SwipeVerticalService',
+      'SensorService',
       CardSensorController
     ]);
 
-  function CardSensorController($scope, $timeout, swipeVerticalService) {
+  function CardSensorController($scope, $timeout, swipeVerticalService, sensorService) {
 
     var self = this;
 
-    $scope.sensorCount = 3;
-    $scope.sensorCurrent = 1;
-    $scope.cardLoading = false;
-
+    $scope.sensorList = [];
+    $scope.sensorCurrent = 0;
+    $scope.cardLoading = true;
+    $scope.sensor = null;
 
     $scope.swipeLeft = function () {
       console.log('swipe left is enabled!');
@@ -48,13 +49,13 @@
     $scope.swipeDown = function (ev) {
       if (swipeVerticalService.isSwipeDown(ev)) {
         console.log('swipe down is enabled!');
-        // TODO
+        self.loadSensorList(true);
       }
     };
 
     $scope.changeSensor = function (page) {
       console.log('page "%s" is clicked', page);
-
+      $scope.cardLoading = true;
       var current = $scope.sensorCurrent;
 
       switch (page) {
@@ -72,31 +73,43 @@
           }
           break;
       }
-      self.changeCard(current);
+      $timeout(function () {
+        self.changeCard(current);
+      }, 500);
     };
 
 
     self.changeCard = function (current) {
-      if ($scope.cardLoading) {
-        return;
-      }
-
-      var count = $scope.sensorCount;
-
+      // adjust the current sensor index!
+      var count = $scope.sensorList.length;
       if (current < 1) {
         current = count;
       }
       if (current > count) {
         current = 1;
       }
-
+      $scope.sensor = $scope.sensorList[current - 1];
       $scope.sensorCurrent = current;
       console.log('sensor current %s', current);
-      $scope.cardLoading = true;
       $timeout(function () {
         $scope.cardLoading = false;
       }, 500);
     };
+
+    self.loadSensorList = function (refresh) {
+      if (refresh === true) {
+        $scope.sensorList = [];
+        $scope.sensorCurrent = 0;
+        $scope.cardLoading = true;
+      }
+      sensorService.getSensorList()
+        .then(function(sensorList) {
+          $scope.sensorList = sensorList;
+          self.changeCard(1);
+        });
+    };
+
+    self.loadSensorList(false);
   }
 
 } ());

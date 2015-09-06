@@ -13,20 +13,30 @@
 
   angular
     .module('howarm')
-    .controller('CardSensorController', ['$scope', 'SwipeVerticalService', CardSensorController]);
+    .controller('CardSensorController', [
+      '$scope',
+      '$timeout',
+      'SwipeVerticalService',
+      CardSensorController
+    ]);
 
-  function CardSensorController($scope, swipeVerticalService) {
+  function CardSensorController($scope, $timeout, swipeVerticalService) {
+
+    var self = this;
 
     $scope.sensorCount = 3;
     $scope.sensorCurrent = 1;
+    $scope.cardLoading = false;
 
 
     $scope.swipeLeft = function () {
       console.log('swipe left is enabled!');
+      self.changeCard($scope.sensorCurrent - 1);
     };
 
     $scope.swipeRight = function () {
       console.log('swipe right is enabled!');
+      self.changeCard($scope.sensorCurrent + 1);
     };
 
     $scope.swipeUp = function (ev) {
@@ -46,7 +56,6 @@
       console.log('page "%s" is clicked', page);
 
       var current = $scope.sensorCurrent;
-      var count = $scope.sensorCount;
 
       switch (page) {
         case 'left':
@@ -63,16 +72,31 @@
           }
           break;
       }
+      self.changeCard(current);
+    };
+
+
+    self.changeCard = function (current) {
+      if ($scope.cardLoading) {
+        return;
+      }
+
+      var count = $scope.sensorCount;
+
       if (current < 1) {
         current = count;
       }
       if (current > count) {
         current = 1;
       }
+
       $scope.sensorCurrent = current;
       console.log('sensor current %s', current);
+      $scope.cardLoading = true;
+      $timeout(function () {
+        $scope.cardLoading = false;
+      }, 500);
     };
-
   }
 
 } ());

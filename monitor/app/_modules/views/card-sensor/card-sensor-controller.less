@@ -20,6 +20,17 @@
   .card-sensor-view {
     overflow: scroll;
     height: 100vh;
+    opacity: 1;
+
+    &.ng-hide-add,
+    &.ng-hide-remove {
+      .fade();
+    }
+
+    &.ng-hide {
+      opacity: 0;
+    }
+
   }
 
   .card-sensor-name {

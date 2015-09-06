@@ -105,7 +105,7 @@ gulp.task('copy-viewer-library', ['clean'], function () {
   return taskCopyLibrary('viewer');
 });
 
-gulp.task('copy-libraries', ['clean', 'copy-libaries-htaccess'], function () {
+gulp.task('copy-libraries', ['clean', 'copy-libaries-htaccess', 'copy-hasher'], function () {
   return gulp.src(['shares/lib/*.php'])
     .pipe(ejs(model, settings))
     .pipe(gulp.dest('dist/shares/lib'));
@@ -115,6 +115,12 @@ gulp.task('copy-libaries-htaccess', ['clean'], function () {
   return gulp.src(['shares/.htaccess'])
     .pipe(ejs(model, { ext: ''}))
     .pipe(gulp.dest('dist/shares'));
+});
+
+gulp.task('copy-hasher', ['clean'], function () {
+  return gulp.src(['shares/Hashids/**/*.php'])
+    .pipe(ejs(model, settings))
+    .pipe(gulp.dest('dist/shares/Hashids'));
 });
 
 gulp.task('copy-slim', ['clean'], function () {

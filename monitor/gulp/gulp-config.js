@@ -19,7 +19,7 @@ module.exports = {
     options: {
       default: {
         rewriteRules: [
-          '^/temo/viewer(.*)$ http://localhost/temo/viewer/$1 [P]'
+          '^/temo/viewer(.*)$ http://www.blueskyfish.de/temo/viewer/$1 [P]'
         ]
       }
     }

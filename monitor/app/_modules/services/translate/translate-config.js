@@ -1,5 +1,5 @@
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitor.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -11,7 +11,7 @@
 
    'use strict';
 
-   angular.module('temoApp').config(['$translateProvider', ConfigTranslate]);
+   angular.module('howarm').config(['$translateProvider', ConfigTranslate]);
 
    function ConfigTranslate($translateProvider) {
      $translateProvider.useStaticFilesLoader({
@@ -19,6 +19,7 @@
        suffix: '.json'
      });
      $translateProvider.preferredLanguage('de');
+     $translateProvider.useSanitizeValueStrategy('sanitize');
    }
 
 } ());

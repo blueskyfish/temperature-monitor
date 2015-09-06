@@ -1,6 +1,6 @@
 {
   "name": "temperature-monitor",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A html5 application shows the sensor data.",
   "keywords": [],
   "private": true,
@@ -13,6 +13,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "connect-modrewrite": "0.8.2",
     "dateformat": "1.0.11",
     "del": "1.2.0",
     "extend": "3.0.0",

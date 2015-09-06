@@ -1,16 +1,48 @@
 //
-// temperature-monitoring - http://github.com/blueskyfish/temperature-monitor.git
+// temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
 //
 // The MIT License (MIT)
 // Copyright (c) 2015 BlueSkyFish
 //
 
 @import (reference) "_styles/variables";
+@import (reference) "_styles/mixins";
 
-html, body {
+html {
+  height: 100%;
+}
+
+* {
+  padding: 0;
+  margin:  0;
+}
+
+html,
+html body {
   font-family: 'Roboto', sans-serif;
-  font-size:   14px;
-  height:      100%;
-  margin:      0px;
-  padding:     0px;
+  .fullscreen();
+}
+
+// an overlay over the complete screen
+.card {
+  .fullscreen();
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+// container with the complete view content
+.container {
+  z-index: @main-container-zindex;
+  overflow: hidden;
+}
+
+
+* {
+  position: relative;
+}
+
+body {
+  position: absolute !important;
 }

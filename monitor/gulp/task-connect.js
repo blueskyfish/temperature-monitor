@@ -1,5 +1,5 @@
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitor.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -11,7 +11,8 @@
 
 var
   gulp = require('gulp'),
-  connect = require('gulp-connect');
+  connect = require('gulp-connect'),
+  modRewrite = require('connect-modrewrite');
 
 var
   helper = require('./gulp-helper'),
@@ -24,7 +25,11 @@ gulp.task('connect', ['app-build'], function () {
   connect.server({
     livereload: true,
     root: rootPaths,
-    port: config.port
-    // here is the place for adding the middlewares
+    port: config.port,
+    middleware: function () {
+      return [
+        modRewrite(config.options.default.rewriteRules)
+      ];
+    }
   });
 });

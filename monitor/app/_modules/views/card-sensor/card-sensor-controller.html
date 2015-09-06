@@ -1,0 +1,21 @@
+<section class="card card-sensor">
+  <section
+    class="card-sensor-view"
+    ng-hide="cardLoading"
+    ng-swipe-left="swipeLeft()"
+    ng-swipe-right="swipeRight()"
+    ng-swipe-up="swipeUp($event)"
+    ng-swipe-down="swipeDown($event)">
+    <h2 class="card-sensor-name">{{ sensor.name }}</h2>
+    <p class="card-sensor-temperature">{{ sensor.temperature }}</p>
+    <p class="card-sensor-date">{{ sensor.date }}</p>
+    <div class="card-sensor-table">
+      <p class="text-left left">Feuchtigkeit</p>
+      <p class="text-right right">{{ sensor.humidity }}</p>
+    </div>
+    <p class="card-sensor-description">
+      {{ sensor.description }}
+    </p>
+  </section>
+  <hw-pagination page-count="sensorList.length" page-current="sensorCurrent" item-click="changeSensor(page, $event)"></hw-pagination>
+</section>

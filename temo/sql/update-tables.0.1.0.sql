@@ -1,5 +1,5 @@
 --
--- temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+-- temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
 --
 -- The MIT License (MIT)
 -- Copyright (c) 2015 BlueSkyFish
@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS `sensor-rules`;
 CREATE TABLE IF NOT EXISTS `sensor-rules` (
   `rule_id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL COMMENT 'the name of the rule'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='(temperature-monitoring) the list of rules';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='(temperature-monitor) the list of rules';
 
 --
 -- Indizes für die Tabelle `sensor-rules`

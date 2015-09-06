@@ -1,0 +1,91 @@
+//
+// temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
+//
+// The MIT License (MIT)
+// Copyright (c) 2015 BlueSkyFish
+//
+
+@import (reference) "_styles/variables";
+@import (reference) "_styles/mixins";
+
+.card-sensor {
+
+  > * {
+    padding-left: @horizontal-full-margin;
+    padding-right: @horizontal-full-margin;
+    padding-top: @vertical-full-margin;
+    padding-bottom: @vertical-full-margin;
+  }
+
+  .card-sensor-view {
+    overflow: scroll;
+    height: 100vh;
+    opacity: 1;
+
+    &.ng-hide-add,
+    &.ng-hide-remove {
+      .fade();
+    }
+
+    &.ng-hide {
+      opacity: 0;
+    }
+
+  }
+
+  .card-sensor-name {
+    font-weight: @font-weight-bolder;
+    margin-top: @vertical-full-margin;
+    text-align: center;
+    .nowrap();
+  }
+
+  .card-sensor-temperature {
+    padding-left:     0;
+    padding-right:    0;
+    margin-left:      -@horizontal-half-margin;
+    margin-right:     -@horizontal-half-margin;
+    font-size:        8.5rem;
+    font-weight:      @font-weight-small;
+    line-height:      9.5rem;
+    text-align:       center;
+    letter-spacing:   -0.6rem;
+    .nowrap();
+  }
+
+  .card-sensor-date {
+    text-align:       right;
+  }
+
+  .card-sensor-table {
+
+    .clearfix();
+    margin-top:     @vertical-controller-margin;
+    margin-bottom:  @vertical-controller-margin;
+
+    > * {
+      .nowrap();
+      margin:       0;
+    }
+
+    .text-left,
+    .text-right {
+      //font-weight: @font-weight-light;
+      line-height: 2.8rem;
+      letter-spacing: -0.05rem;
+    }
+
+    .text-left {
+      text-align:     left;
+    }
+
+    .test-right {
+      text-align:     right;
+      font-size:      2.4rem;
+    }
+  }
+
+  .card-sensor-description {
+    font-weight:      @font-weight-light;
+  }
+}

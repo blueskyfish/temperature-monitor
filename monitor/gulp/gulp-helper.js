@@ -1,5 +1,5 @@
 /*
- * temperature-monitoring - http://github.com/blueskyfish/temperature-monitor.git
+ * temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
  *
  * The MIT License (MIT)
  * Copyright (c) 2015 BlueSkyFish
@@ -57,7 +57,7 @@ function _getContextPath() {
     case 'prod':
       return '/temo/monitor/';
     default:
-      return '/monitor/';
+      return '/';
   }
 }
 

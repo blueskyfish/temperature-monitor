@@ -1,5 +1,5 @@
 --
--- temperature-monitoring - http://github.com/blueskyfish/temperature-monitoring.git
+-- temperature-monitor - http://github.com/blueskyfish/temperature-monitor.git
 --
 -- The MIT License (MIT)
 -- Copyright (c) 2015 BlueSkyFish
@@ -38,6 +38,32 @@ CREATE TABLE IF NOT EXISTS `sensor-currents` (
 
 INSERT INTO `sensor-currents` (`group_id`, `name_id`, `temperature`, `humidity`, `date`) VALUES
 (1000, 0, 0, 0, '1970-01-01 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `sensor-hasher`
+--
+
+DROP TABLE IF EXISTS `sensor-hasher`;
+CREATE TABLE IF NOT EXISTS `sensor-hasher` (
+  `hash_key` varchar(60) NOT NULL,
+  `salt` varchar(60) NOT NULL,
+  `pin` varchar(20) NOT NULL,
+  `enabled` enum('Y','N') NOT NULL DEFAULT 'Y'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='(temperature-monitor) The generated hashes';
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `sensor-hasher-rules`
+--
+
+DROP TABLE IF EXISTS `sensor-hasher-rules`;
+CREATE TABLE IF NOT EXISTS `sensor-hasher-rules` (
+  `hash_key` varchar(60) NOT NULL,
+  `rule_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='(temperature monitoring) link table between hasher and rules';
 
 -- --------------------------------------------------------
 
@@ -93,7 +119,7 @@ DROP TABLE IF EXISTS `sensor-rules`;
 CREATE TABLE IF NOT EXISTS `sensor-rules` (
   `rule_id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL COMMENT 'the name of the rule'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='(temperature-monitoring) the list of rules';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='(temperature-monitor) the list of rules';
 
 --
 -- Daten für Tabelle `sensor-rules`
@@ -127,6 +153,18 @@ ALTER TABLE `sensor-currents`
   ADD PRIMARY KEY (`group_id`,`name_id`) USING BTREE;
 
 --
+-- Indizes für die Tabelle `sensor-hasher`
+--
+ALTER TABLE `sensor-hasher`
+  ADD PRIMARY KEY (`hash_key`);
+
+--
+-- Indizes für die Tabelle `sensor-hasher-rules`
+--
+ALTER TABLE `sensor-hasher-rules`
+  ADD UNIQUE KEY `HASH_RULES` (`hash_key`,`rule_id`);
+
+--
 -- Indizes für die Tabelle `sensor-names`
 --
 ALTER TABLE `sensor-names`
@@ -141,7 +179,8 @@ ALTER TABLE `sensor-readers`
 --
 -- Indizes für die Tabelle `sensor-rules`
 --
-ALTER TABLE `sensor-rules`
+ALTER TABLE
+`sensor-rules`
   ADD PRIMARY KEY (`rule_id`);
 
 --
@@ -165,4 +204,5 @@ ALTER TABLE `sensor-rules`
 --
 ALTER TABLE `sensors`
   MODIFY `sensor_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;SET FOREIGN_KEY_CHECKS=1;
+
 COMMIT;

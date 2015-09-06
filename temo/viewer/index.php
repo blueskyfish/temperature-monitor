@@ -58,12 +58,29 @@ $app->get('/info', function () use ($app) {
   $provider->sendInfo();
 });
 
+
 //
 // Rest Action GET: /viewer/sensor/:id
 //
 $app->get('/sensor/:id', function ($id) use ($app) {
   $provider = new SensorProvider($app);
   $provider->sendSensor($id);
+});
+
+
+//
+// catch errors
+//
+$app->error(function (\Exception $e) use ($app) {
+  $result = array(
+      'status'  => Define::RESULT_OKAY,
+      'message' => $e->getMessage(),
+      'code' => $e->getCode(),
+      'file' => $e->getFile(),
+      'line' => $e->getLine(),
+      'trace' => $e->getTraceAsString()
+  );
+  $app->sendResult($result, 400);
 });
 
 //

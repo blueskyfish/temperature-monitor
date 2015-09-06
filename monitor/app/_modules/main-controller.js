@@ -7,17 +7,16 @@
  * Distributed on "<%= datetime %> @ <%= target %>" in version <%= version %>
  */
 
- (function () {
+(function () {
 
-   'use strict';
+  'use strict';
 
-   angular
-     .module('howarm', [
-       'ngAnimate',
-       'ngSanitize',
-       'pascalprecht.translate',
-       'ui.router',
-       'swipe'
-     ]);
+  angular
+    .module('howarm')
+    .controller('MainController', [MainController]);
 
- } ());
+  function MainController() {
+
+  }
+
+} ());

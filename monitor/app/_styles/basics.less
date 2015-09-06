@@ -6,4 +6,40 @@
 //
 
 @import (reference) "_styles/variables";
+@import (reference) "_styles/mixins";
 
+html {
+  height: 100%;
+}
+
+* {
+  padding: 0;
+  margin:  0;
+}
+
+html,
+html body {
+  font-family: 'Roboto', sans-serif;
+  .fullscreen();
+}
+
+// an overlay over the complete screen
+.card {
+  .fullscreen();
+  margin: 0;
+  padding: 0;
+}
+
+// container with the complete view content
+.container {
+  z-index: @main-container-zindex;
+}
+
+
+* {
+  position: relative;
+}
+
+body {
+  position: absolute !important;
+}

@@ -32,7 +32,8 @@
           if (result && result.status === 'okay') {
             var list = [];
             angular.forEach(result.sensors, function (sensor) {
-              sensor.temperature = "d°".replace(/d/, mathService.round(sensor.temperature / 100, -1)).replace(/\./, ',');
+              sensor.temperature = 'd°'.replace(
+                /d/, mathService.round(sensor.temperature / 100, -1)).replace(/\./, ',');
               sensor.humidity = mathService.round(sensor.humidity / 100, 0) + ' %';
               list.push(sensor);
             });
@@ -40,7 +41,7 @@
           }
           // defer.reject() ???
         })
-        .error(function (reason) {
+        .error(function () {
           // TODO
         });
 

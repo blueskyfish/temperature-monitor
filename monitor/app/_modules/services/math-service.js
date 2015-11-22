@@ -26,7 +26,7 @@
       ceil: function (value, exp) {
         return decimalAdjust('ceil', value, exp);
       }
-    }
+    };
   }
 
   function decimalAdjust(type, value, exp) {

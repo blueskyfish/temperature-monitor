@@ -16,7 +16,7 @@
     "connect-modrewrite": "0.8.2",
     "dateformat": "1.0.11",
     "del": "1.2.0",
-    "extend": "3.0.0",
+    "extend": "3.0.2",
     "gulp": "3.9.0",
     "gulp-bump": "0.3.1",
     "gulp-concat": "2.6.0",
